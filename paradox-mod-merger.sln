@@ -1,0 +1,44 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paradox-mod-merger", "paradox-mod-merger.csproj", "{076BFCFF-1D3E-44FB-B434-73716B79A135}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTLib", "..\DTLib\DTLib\DTLib.csproj", "{E22E3ABF-B364-46A0-814E-48E1035697CB}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "paradox-rus-localisation-gen", "paradox-rus-localisation-gen.csproj", "{839133EF-6481-498A-B70D-878404BB78A4}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Build|Any CPU = Build|Any CPU
+		Build|x64 = Build|x64
+		Build|x86 = Build|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{076BFCFF-1D3E-44FB-B434-73716B79A135}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{076BFCFF-1D3E-44FB-B434-73716B79A135}.Build|Any CPU.Build.0 = Build|Any CPU
+		{076BFCFF-1D3E-44FB-B434-73716B79A135}.Build|x64.ActiveCfg = Build|Any CPU
+		{076BFCFF-1D3E-44FB-B434-73716B79A135}.Build|x64.Build.0 = Build|Any CPU
+		{076BFCFF-1D3E-44FB-B434-73716B79A135}.Build|x86.ActiveCfg = Build|Any CPU
+		{076BFCFF-1D3E-44FB-B434-73716B79A135}.Build|x86.Build.0 = Build|Any CPU
+		{E22E3ABF-B364-46A0-814E-48E1035697CB}.Build|Any CPU.ActiveCfg = Debug|Any CPU
+		{E22E3ABF-B364-46A0-814E-48E1035697CB}.Build|Any CPU.Build.0 = Debug|Any CPU
+		{E22E3ABF-B364-46A0-814E-48E1035697CB}.Build|x64.ActiveCfg = Debug|Any CPU
+		{E22E3ABF-B364-46A0-814E-48E1035697CB}.Build|x64.Build.0 = Debug|Any CPU
+		{E22E3ABF-B364-46A0-814E-48E1035697CB}.Build|x86.ActiveCfg = Debug|Any CPU
+		{E22E3ABF-B364-46A0-814E-48E1035697CB}.Build|x86.Build.0 = Debug|Any CPU
+		{839133EF-6481-498A-B70D-878404BB78A4}.Build|Any CPU.ActiveCfg = Build|Any CPU
+		{839133EF-6481-498A-B70D-878404BB78A4}.Build|Any CPU.Build.0 = Build|Any CPU
+		{839133EF-6481-498A-B70D-878404BB78A4}.Build|x64.ActiveCfg = Build|Any CPU
+		{839133EF-6481-498A-B70D-878404BB78A4}.Build|x64.Build.0 = Build|Any CPU
+		{839133EF-6481-498A-B70D-878404BB78A4}.Build|x86.ActiveCfg = Build|Any CPU
+		{839133EF-6481-498A-B70D-878404BB78A4}.Build|x86.Build.0 = Build|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7288F317-0289-4953-8D01-F04EC8809E0F}
+	EndGlobalSection
+EndGlobal

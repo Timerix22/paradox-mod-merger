@@ -1,0 +1,7 @@
+C:\projects\c#\paradox-mod-merger\bin\paradox-rus-localisation-gen.exe
+C:\projects\c#\paradox-mod-merger\bin\DTLib.dll
+C:\projects\c#\paradox-mod-merger\obj\Build\paradox-rus-localisation-gen.csproj.AssemblyReference.cache
+C:\projects\c#\paradox-mod-merger\obj\Build\paradox-rus-localisation-gen.csproj.SuggestedBindingRedirects.cache
+C:\projects\c#\paradox-mod-merger\obj\Build\paradox-rus-localisation-gen.csproj.CoreCompileInputs.cache
+C:\projects\c#\paradox-mod-merger\obj\Build\paradox-rus-localisation-gen.csproj.CopyComplete
+C:\projects\c#\paradox-mod-merger\obj\Build\paradox-rus-localisation-gen.exe
