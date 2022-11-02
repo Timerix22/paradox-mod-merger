@@ -90,7 +90,6 @@ static class ParadoxModMerger
                     {
                         string modarch = "";
                         if (Directory.GetFiles(moddirs[i], "*.zip").Length != 0) modarch = Directory.GetFiles(moddirs[i], "*.zip")[0];
-                        string modname = "";
                         if (modarch.Length != 0)
                         {
                             Log("y", $"archive found: {modarch}");
@@ -104,7 +103,7 @@ static class ParadoxModMerger
                             moddirs[i] = "_TEMP";
                             Log("g", "\tfiles extracted");
                         }
-                        modname = File.ReadAllText($"{moddirs[i]}\\descriptor.mod");
+                        string modname = File.ReadAllText($"{moddirs[i]}\\descriptor.mod");
                         modname = modname.Remove(0, modname.IndexOf("name=\"") + 6);
                         modname = modname.Remove(modname.IndexOf("\""))
                             .Replace("\\", "").Replace(":", "").Replace("?", "").Replace("\"", "").Replace("/", "")
@@ -134,8 +133,6 @@ static class ParadoxModMerger
                                 case "portraits":
                                     Directory.Copy($"{moddirs[i]}\\{subdirs[n]}", $"{outdir}\\{modname}\\{subdirs[n]}", out List<string> _conflicts, true);
                                     conflicts.AddRange(_conflicts);
-                                    break;
-                                default:
                                     break;
                             }
                         }
@@ -215,8 +212,8 @@ static class ParadoxModMerger
             // вывод конфликтующих файлов при -merge и -clear если такие есть
             if (conflicts.Count > 0)
             {
-                Log("r", $"found {conflicts.Count} conflicts:");
-                foreach (string conflict in conflicts) Log("m", $"{conflict}");
+                Log("r", $"found {conflicts.Count} conflicts:\n",
+                    "m", conflicts.MergeToString("\n"));
             }
         }
         catch (Exception ex)
