@@ -37,7 +37,6 @@ static class ParadoxModMerger
                 return;
             }
 
-            Log("c", "args: ");
             string srcdir = "";
             string srcdir2 = "";
             string outdir = "";
@@ -45,40 +44,32 @@ static class ParadoxModMerger
             // определение всех аргументов
             for (sbyte i = 0; i < args.Length; i++)
             {
-                Log("g", $" {args[i]}");
                 switch (args[i])
                 {
                     case "-clear":
-                        srcdir = args[++i].Replace("\"", "");
-                        Log("g", $" {args[i]}");
+                        srcdir = args[++i].Replace("\"", "").ИсправитьРазд();
                         mode = 0;
                         break;
                     case "-merge":
-                        srcdir = args[++i].Replace("\"", "");
-                        Log("g", $" {args[i]}");
+                        srcdir = args[++i].Replace("\"", "").ИсправитьРазд();
                         mode = 1;
                         break;
                     case "-diff":
-                        srcdir = args[++i].Replace("\"", "");
-                        Log("g", $" {args[i]}");
-                        srcdir2 = args[++i].Replace("\"", "");
-                        Log("g", $" {args[i]}");
+                        srcdir = args[++i].Replace("\"", "").ИсправитьРазд();
+                        srcdir2 = args[++i].Replace("\"", "").ИсправитьРазд();
                         mode = 2;
                         break;
                     case "-merge-single":
-                        srcdir = args[++i].Replace("\"", "");
-                        Log("g", $" {args[i]}");
+                        srcdir = args[++i].Replace("\"", "").ИсправитьРазд();
                         mode = 3;
                         break;
                     case "-out":
-                        outdir = args[++i].Replace("\"", "");
-                        Log("g", $" {args[i]}");
+                        outdir = args[++i].Replace("\"", "").ИсправитьРазд();
                         break;
                     default:
                         throw new Exception($"invalid argument: <{args[i]}>");
                 }
             }
-            Log("");
 
             var conflicts = new List<string>();
             string[] moddirs = Directory.GetDirectories(srcdir);
@@ -96,23 +87,23 @@ static class ParadoxModMerger
                             var pr = new Process();
                             pr.StartInfo.CreateNoWindow = true;
                             pr.StartInfo.UseShellExecute = false;
-                            pr.StartInfo.FileName = "7z\\7z.exe";
+                            pr.StartInfo.FileName = "7z{Путь.Разд}7z.exe";
                             pr.StartInfo.Arguments = $"x -y -o_TEMP \"{modarch}\"";
                             pr.Start();
                             pr.WaitForExit();
                             moddirs[i] = "_TEMP";
                             Log("g", "\tfiles extracted");
                         }
-                        string modname = File.ReadAllText($"{moddirs[i]}\\descriptor.mod");
+                        string modname = File.ReadAllText($"{moddirs[i]}{Путь.Разд}descriptor.mod");
                         modname = modname.Remove(0, modname.IndexOf("name=\"") + 6);
                         modname = modname.Remove(modname.IndexOf("\""))
-                            .Replace("\\", "").Replace(":", "").Replace("?", "").Replace("\"", "").Replace("/", "")
+                            .Replace($"{Путь.Разд}", "").Replace(":", "").Replace("?", "").Replace("\"", "").Replace("/", "")
                             .Replace("\'", "").Replace("|", "").Replace("<", "").Replace(">", "").Replace("*", "");
                         Log("b", $"[{i + 1}/{moddirs.Length}] copying mod ", "c", $"{modname}");
                         string[] subdirs = Directory.GetDirectories(moddirs[i]);
                         for (sbyte n = 0; n < subdirs.Length; n++)
                         {
-                            subdirs[n] = subdirs[n].Remove(0, subdirs[n].LastIndexOf('\\') + 1);
+                            subdirs[n] = subdirs[n].Remove(0, subdirs[n].LastIndexOf(Путь.Разд) + 1);
                             switch (subdirs[n])
                             {
                                 // stellaris
@@ -131,7 +122,8 @@ static class ParadoxModMerger
                                 // hoi4
                                 case "history":
                                 case "portraits":
-                                    Directory.Copy($"{moddirs[i]}\\{subdirs[n]}", $"{outdir}\\{modname}\\{subdirs[n]}", out List<string> _conflicts, true);
+                                    Directory.Copy($"{moddirs[i]}{Путь.Разд}{{subdirs[n]}}",
+                                        $"{outdir}{Путь.Разд}{{modname}}{Путь.Разд}{{subdirs[n]}}", out List<string> _conflicts, true);
                                     conflicts.AddRange(_conflicts);
                                     break;
                             }
@@ -177,7 +169,7 @@ static class ParadoxModMerger
                     void AddMod(string mod)
                     {
                         mod = mod.Remove(0, 1);
-                        mod = mod.Remove(mod.IndexOf('\\'));
+                        mod = mod.Remove(mod.IndexOf(Путь.Разд));
                         if (!mods.Contains(mod)) mods.Add(mod);
                     }
                     // вывод результата
