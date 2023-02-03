@@ -28,10 +28,4 @@
   <ItemGroup>
     <Compile Include="ParadoxRusLocalisationGen.cs" />
   </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\DTLib\DTLib\DTLib.csproj">
-      <Project>{e22e3abf-b364-46a0-814e-48e1035697cb}</Project>
-      <Name>DTLib</Name>
-    </ProjectReference>
-  </ItemGroup>
 </Project>

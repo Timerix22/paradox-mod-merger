@@ -19,3 +19,5 @@
 
 #backups
 .old*/
+
+nuget.config
