@@ -5,13 +5,13 @@ static class Localisation
     static ConsoleLogger logger = new($"logs", "autoloc");
     static void Log(params string[] msg) => logger.Log(msg);
     
-    public static void GenerateRussian(string engDir, string rusDir)
+    public static void GenerateRussian(IOPath engDir, IOPath rusDir)
     {
-        foreach (string enfFileName in Directory.GetAllFiles(engDir))
+        foreach (var enfFileName in Directory.GetAllFiles(engDir))
         {
-            string rusFileName = enfFileName
-                .Replace(engDir, rusDir)
-                .Replace("l_english", "l_russian");
+            IOPath rusFileName = enfFileName
+                .ReplaceBase(engDir, rusDir)
+                .ReplaceAnywhere("l_english", "l_russian");
             if (!File.Exists(rusFileName))
             {
                 string text = File.ReadAllText(enfFileName)

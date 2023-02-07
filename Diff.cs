@@ -11,17 +11,17 @@ static class Diff
         DiffMods(split[0], split[1]);
     }
     
-    public static void DiffMods(string moddir0, string moddir1)
+    public static void DiffMods(IOPath moddir0, IOPath moddir1)
     {
         var hasher = new Hasher();
-        var diff = new Dictionary<string, byte[]>();
+        var diff = new Dictionary<IOPath, byte[]>();
         // добавление файлов из первой папки
-        List<string> files = Directory.GetAllFiles(moddir0);
-        var mods = new List<string>();
+        List<IOPath> files = Directory.GetAllFiles(moddir0);
+        var mods = new List<IOPath>();
         for (short i = 0; i < files.Count; i++)
         {
             byte[] hash = hasher.HashFile(files[i]);
-            files[i] = files[i].Replace(moddir0, "");
+            files[i] = files[i].ReplaceBase(moddir0, "");
             diff.Add(files[i], hash);
             AddMod(files[i]);
         }
@@ -31,17 +31,17 @@ static class Diff
         for (short i = 0; i < files.Count; i++)
         {
             byte[] hash = hasher.HashFile(files[i]);
-            files[i] = files[i].Replace(moddir1, "");
+            files[i] = files[i].RemoveBase(moddir1);
             if (diff.ContainsKey(files[i]) && diff[files[i]].HashToString() == hash.HashToString())
                 diff.Remove(files[i]);
             else
             {
-                diff.Add(moddir1 + files[i], hash);
+                diff.Add(Path.Concat(moddir1,files[i]), hash);
                 AddMod(files[i]);
             }
         }
 
-        void AddMod(string mod)
+        void AddMod(IOPath mod)
         {
             mod = mod.Remove(0, 1);
             mod = mod.Remove(mod.IndexOf(Path.Sep));
@@ -51,10 +51,10 @@ static class Diff
         // вывод результата
         StringBuilder output = new StringBuilder();
         output.Append($"[{DateTime.Now}]\n\n");
-        foreach (string mod in mods)
+        foreach (var mod in mods)
         {
             output.Append('\n').Append(mod).Append("\n{\n");
-            foreach (string file in diff.Keys)
+            foreach (var file in diff.Keys)
             {
                 if (file.Contains(mod))
                 {

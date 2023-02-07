@@ -19,6 +19,9 @@ public static class Program
     {
         try
         {
+            Console.OutputEncoding=Encoding.UTF8;
+            Console.InputEncoding=Encoding.UTF8;
+            
             string outPath = "" ;
             
             new LaunchArgumentParser(
@@ -29,7 +32,7 @@ public static class Program
                     0),
                 new LaunchArgument(new []{"clear"}, 
                     "Clear mod files and put them into separate dirs in output dir. Requires -o", 
-                    wdir=>Clear.ClearWorkshop(wdir, outPath), 
+                    wdir=>Workshop.ClearWorkshop(wdir, outPath), 
                     "workshop_dir", 
                     1),
                 new LaunchArgument(new []{"diff"}, 
@@ -49,7 +52,10 @@ public static class Program
                 new LaunchArgument(new []{"gen-rus-locale"},
                     "Creates l_russian copy of english locale in output directory. Requires -o",
                     eng=>Localisation.GenerateRussian(eng, outPath),
-                    "english_locale_path", 1)
+                    "english_locale_path", 1),
+                new LaunchArgument(new []{"desc"}, 
+                    "Downloads mod description from steam to new file in outDir. Requires -o",
+                    id=>Workshop.CreateDescFile(id, outPath), "mod_id")
             ).ParseAndHandle(args);
         }
         catch (LaunchArgumentParser.ExitAfterHelpException)
@@ -63,10 +69,9 @@ public static class Program
 
 
     // вывод конфликтующих файлов при -merge и -clear если такие есть
-    public static void LogConflicts(List<string> conflicts)
+    public static void LogConflicts(List<IOPath> conflicts)
     {
-        Log("w", $"found {conflicts.Count}");
         if(conflicts.Count>0)
-            Log("w","conflicts:\n", "m", conflicts.MergeToString("\n"));
+            Log("y", $"conflicts found: {conflicts.Count}\n{conflicts.MergeToString("\n")}");
     }
 }
