@@ -9,6 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "solution_files", "solution_
 	ProjectSection(SolutionItems) = preProject
 		.gitignore = .gitignore
 		nuget.config = nuget.config
+		publish_native.sh = publish_native.sh
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTLib", "..\DTLib\DTLib\DTLib.csproj", "{67E226B7-F04B-4FB1-A9AA-E4AE3A5A8A3F}"
