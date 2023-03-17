@@ -36,26 +36,36 @@ public static class Program
                     "workshop_dir", 
                     1),
                 new LaunchArgument(new []{"diff"}, 
-                    "Compare mod files by hash",
-                    p=>Diff.DiffMods(p), 
-                    "first_mod_directory;second_mod_directory", 1),
+                    "Compares mod files by hash",
+                    p=>Diff.DiffCommandHandler(p), 
+                    "first_mod_directory:second_mod_directory:...", 
+                    1),
+                new LaunchArgument(new []{"diff-conflicts"},
+                    "reads conflicts_XXX.dtsod file and shows text diff for each file",
+                    p=>Diff.DiffConflictsCommandHandler(p),
+                    "conflicts_dtsod_path", 
+                    1
+                ),
                 new LaunchArgument(new []{"merge-subdirs"}, 
-                    "Merge mods and show conflicts. Requires -o", 
+                    "Merges mods and shows conflicts. Requires -o", 
                     d => Merge.MergeAll(Directory.GetDirectories(d), outPath),
                     "dir_with_mods", 
                     1),
-                new LaunchArgument(new []{"merge-single"}, 
+                new LaunchArgument(new []{"merge-into", "merge-single"}, 
                     "Merges one mod into output dir and shows conflicts. Requires -o",
-                    mod=>Merge.MergeSingle(mod, outPath), 
+                    mod=>Merge.MergeInto(mod, outPath), 
                     "mod_dir",
                     1),
                 new LaunchArgument(new []{"gen-rus-locale"},
                     "Creates l_russian copy of english locale in output directory. Requires -o",
                     eng=>Localisation.GenerateRussian(eng, outPath),
-                    "english_locale_path", 1),
+                    "english_locale_path", 
+                    1),
                 new LaunchArgument(new []{"desc"}, 
                     "Downloads mod description from steam to new file in outDir. Requires -o",
-                    id=>Workshop.CreateDescFile(id, outPath), "mod_id")
+                    id=>Workshop.CreateDescFile(id, outPath), 
+                    "mod_id",
+                    1)
             ).ParseAndHandle(args);
         }
         catch (LaunchArgumentParser.ExitAfterHelpException)
@@ -67,11 +77,14 @@ public static class Program
         Console.ResetColor();
     }
 
-
-    // вывод конфликтующих файлов при -merge и -clear если такие есть
-    public static void LogConflicts(List<IOPath> conflicts)
+    public static IOPath[] SplitStringToPaths(string connected_paths)
     {
-        if(conflicts.Count>0)
-            Log("y", $"conflicts found: {conflicts.Count}\n{conflicts.MergeToString("\n")}");
+        if (!connected_paths.Contains(':')) 
+            throw new Exception($"<{connected_paths}> doesn't contain any separators (:)");
+        string[] split = connected_paths.Split(':');
+        IOPath[] split_iop = new IOPath[split.Length];
+        for (int i = 0; i < split.Length; i++)
+            split_iop[i] = new IOPath(split[i]);
+        return split_iop;
     }
 }

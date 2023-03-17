@@ -78,7 +78,7 @@ static class Workshop
                         Directory.Copy(Path.Concat(moddirs[i], subdirs[n]),
                             Path.Concat(outModDir, subdirs[n]),
                              true, out var _conflicts);
-                        Program.LogConflicts(_conflicts);
+                        Log("y", $"found {_conflicts.Count} conflicts:\n{_conflicts.MergeToString('\n')}");
                         break;
                     }
                 }
