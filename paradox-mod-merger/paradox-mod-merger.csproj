@@ -19,7 +19,7 @@
     <ProjectReference Include="..\..\DTLib\DTLib\DTLib.csproj" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' != 'Debug' ">
-    <PackageReference Include="DTLib" Version="1.1.4" />
+    <PackageReference Include="DTLib" Version="1.1.6" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\diff-text\diff-text.csproj" />

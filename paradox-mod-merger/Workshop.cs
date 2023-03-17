@@ -30,7 +30,7 @@ static class Workshop
                 var pr = new Process();
                 pr.StartInfo.CreateNoWindow = true;
                 pr.StartInfo.UseShellExecute = false;
-                pr.StartInfo.FileName = Path.Concat("7z", "7z.exe").Str;
+                pr.StartInfo.FileName = "7z";
                 pr.StartInfo.Arguments = $"x -y -o_UNZIP \"{modZip}\"";
                 Log("h",$"{pr.StartInfo.WorkingDirectory}$: {pr.StartInfo.FileName} {pr.StartInfo.Arguments}");
                 pr.Start();
