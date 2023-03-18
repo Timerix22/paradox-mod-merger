@@ -20,11 +20,10 @@ static class Workshop
         for (int i = 0; i < moddirs.Length; i++)
         {
             string modId = moddirs[i].LastName().ToString();
-            IOPath modZip="";
-            if (Directory.GetFiles(moddirs[i], "*.zip").Length != 0)
-                modZip = Directory.GetFiles(moddirs[i], "*.zip")[0];
-            if (modZip.Length != 0)
+            var zips = Directory.GetFiles(moddirs[i], "*.zip");
+            if (zips.Length > 0)
             {
+                var modZip = zips[0];
                 Log("y", $"archive found: {modZip}");
                 if (Directory.Exists("_UNZIP")) Directory.Delete("_UNZIP");
                 var pr = new Process();
@@ -32,7 +31,7 @@ static class Workshop
                 pr.StartInfo.UseShellExecute = false;
                 pr.StartInfo.FileName = "7z";
                 pr.StartInfo.Arguments = $"x -y -o_UNZIP \"{modZip}\"";
-                Log("h",$"{pr.StartInfo.WorkingDirectory}$: {pr.StartInfo.FileName} {pr.StartInfo.Arguments}");
+                Log("h",$"{pr.StartInfo.FileName} {pr.StartInfo.Arguments}");
                 pr.Start();
                 pr.WaitForExit();
                 moddirs[i] = "_UNZIP";
@@ -78,7 +77,12 @@ static class Workshop
                         Directory.Copy(Path.Concat(moddirs[i], subdirs[n]),
                             Path.Concat(outModDir, subdirs[n]),
                              true, out var _conflicts);
-                        Log("y", $"found {_conflicts.Count} conflicts:\n{_conflicts.MergeToString('\n')}");
+                        if (_conflicts.Count != 0)
+                        {
+                            Log("r", $"found {_conflicts.Count} conflicts:\n{_conflicts.MergeToString('\n')}");
+                            return;
+                        }
+
                         break;
                     }
                 }
@@ -97,7 +101,7 @@ static class Workshop
             string desc = await DownloadModDescription(workshopId);
             var file = Path.Concat(outDir, $"desc_{workshopId}.txt");
             File.WriteAllText(file, desc);
-            Log("g", $"downloaded {workshopId} description to {file}");
+            Log("h", $"downloaded {workshopId} description to {file}");
         }
         catch (Exception e)
         {
