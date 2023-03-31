@@ -2,7 +2,6 @@ using System.Linq;
 using DTLib.Console;
 using DTLib.Dtsod;
 using diff_text;
-using DiffMatchPatch;
 using DTLib.Ben.Demystifier;
 
 namespace ParadoxModMerger; 
@@ -29,7 +28,7 @@ static class Diff
         LogModConflicts(conflicts);
     }
 
-    public static void DiffConflictsCommandHandler(IOPath conflicts_dtsod_path)
+    public static void DiffDetailedCommandHandler(IOPath conflicts_dtsod_path)
     {
         var dtsod = new DtsodV23(File.ReadAllText(conflicts_dtsod_path));
         var conflicts = new ConflictingModFile[dtsod.Count];
@@ -233,7 +232,7 @@ static class Diff
         var dtsod = new DtsodV23();
         foreach (var cfl in conflicts)
         {
-            Log("m", "file ","c", cfl.FilePath, "m", "in mods", "b", cfl.Mods.MergeToString(", "));
+            Log("m", "file ","c", cfl.FilePath, "m", " in mods ", "m", cfl.Mods.MergeToString(", "));
             dtsod.Add(cfl.FilePath, cfl.Mods);
         }
 

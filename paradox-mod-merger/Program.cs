@@ -40,9 +40,9 @@ public static class Program
                     p=>Diff.DiffCommandHandler(p), 
                     "first_mod_directory:second_mod_directory:...", 
                     1),
-                new LaunchArgument(new []{"diff-conflicts"},
+                new LaunchArgument(new []{"diff-detailed"},
                     "reads conflicts_XXX.dtsod file and shows text diff for each file",
-                    p=>Diff.DiffConflictsCommandHandler(p),
+                    p=>Diff.DiffDetailedCommandHandler(p),
                     "conflicts_dtsod_path", 
                     1
                 ),
@@ -79,9 +79,14 @@ public static class Program
 
     public static IOPath[] SplitStringToPaths(string connected_paths)
     {
-        if (!connected_paths.Contains(':')) 
-            throw new Exception($"<{connected_paths}> doesn't contain any separators (:)");
-        string[] split = connected_paths.Split(':');
+        char part_sep;
+        if (connected_paths.Contains(':'))
+            part_sep = ':';
+        else if (!connected_paths.Contains(':'))
+            part_sep = ';';
+        else throw new Exception($"<{connected_paths}> doesn't contain any separators (:/;)");
+        
+        string[] split = connected_paths.Split(part_sep);
         IOPath[] split_iop = new IOPath[split.Length];
         for (int i = 0; i < split.Length; i++)
             split_iop[i] = new IOPath(split[i]);
