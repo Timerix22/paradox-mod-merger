@@ -1,5 +1,6 @@
 using System.Linq;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using DTLib.Ben.Demystifier;
 using HtmlAgilityPack;
@@ -17,6 +18,8 @@ static class Workshop
     {
         var moddirs = Directory.GetDirectories(workshopDir);
         Log("b", $"found {moddirs.Length} mod dirs");
+        Task[] create_desc_tasks = new Task[moddirs.Length];
+        
         for (int i = 0; i < moddirs.Length; i++)
         {
             string modId = moddirs[i].LastName().ToString();
@@ -47,9 +50,7 @@ static class Workshop
             IOPath outModDir=Path.Concat(outDir, Path.ReplaceRestrictedChars(modname));
             File.Copy(descriptorPath, Path.Concat(outModDir, "descriptor.mod"), true);
             
-            CreateDescFile(modId, outModDir);
-            
-            
+            create_desc_tasks[i] = CreateDescFile(modId, outModDir);
             
             var subdirs = Directory.GetDirectories(moddirs[i]);
             for (sbyte n = 0; n < subdirs.Length; n++)
@@ -90,11 +91,14 @@ static class Workshop
 
             if (Directory.Exists("_UNZIP")) Directory.Delete("_UNZIP");
         }
+
+        Task.WaitAll(create_desc_tasks);
     }
 
     private static HttpClient http = new HttpClient();
 
-    public static async void CreateDescFile(string workshopId, IOPath outDir)
+    
+    public static async Task CreateDescFile(string workshopId, IOPath outDir)
     {
         try
         {

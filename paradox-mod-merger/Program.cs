@@ -63,7 +63,7 @@ public static class Program
                     1),
                 new LaunchArgument(new []{"desc"}, 
                     "Downloads mod description from steam to new file in outDir. Requires -o",
-                    id=>Workshop.CreateDescFile(id, outPath), 
+                    id=>Workshop.CreateDescFile(id, outPath).GetAwaiter().GetResult(), 
                     "mod_id",
                     1)
             ).ParseAndHandle(args);
