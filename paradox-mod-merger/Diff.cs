@@ -7,14 +7,13 @@ using DTLib.Ben.Demystifier;
 namespace ParadoxModMerger; 
 
 
-public record struct ConflictingModFile(string FilePath, string[] Mods);
-
 public enum DiffState
 {
     Added, Equal, Removed, Changed
 }
     
 public record struct DiffPart<T>(T Value, DiffState State);
+public record struct ConflictingModFile(string FilePath, string[] Mods);
 
 static class Diff
 {
@@ -23,7 +22,7 @@ static class Diff
 
     public static void DiffCommandHandler(string connected_pathes)
     {
-        IOPath[] moddirs = Program.SplitStringToPaths(connected_pathes);
+        IOPath[] moddirs = Program.SplitArgToPaths(connected_pathes, false);
         var conflicts = FindModConflicts(moddirs);
         LogModConflicts(conflicts);
     }
@@ -148,14 +147,14 @@ static class Diff
                     case ConsoleKey.LeftArrow:
                     {
                         ColoredConsole.Write("w", "enter left mod number: ");
-                        string answ = Console.ReadLine();
+                        string answ = Console.ReadLine()!;
                         selected_mod0_i = answ.ToInt();
                         break;
                     }
                     case ConsoleKey.RightArrow:
                     {
                         ColoredConsole.Write("w", "enter right mod number: ");
-                        string answ = Console.ReadLine();
+                        string answ = Console.ReadLine()!;
                         selected_mod1_i = answ.ToInt();
                         break;
                     }
@@ -194,7 +193,7 @@ static class Diff
 
     public static IEnumerable<DiffPart<T>> DiffCollections<T>(ICollection<T> col0, ICollection<T> col1)
     {
-        foreach (T el in col0)
+        foreach (var el in col0)
             yield return new DiffPart<T>(el, col1.Contains(el) ? DiffState.Equal : DiffState.Removed);
         foreach (var el in col1)
             if (!col0.Contains(el))
