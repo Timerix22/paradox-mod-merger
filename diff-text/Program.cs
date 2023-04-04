@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using DiffMatchPatch;
+using DTLib.Ben.Demystifier;
 using DTLib.Console;
 using DTLib.Filesystem;
 
@@ -9,15 +10,15 @@ namespace diff_text;
 
 public static class DiffText
 {
-    internal static void Main(string[] args)
+    internal static int Main(string[] args)
     {
         Console.InputEncoding = Encoding.UTF8;
         Console.OutputEncoding = Encoding.UTF8;
 
         if (args.Length < 1)
         {
-            Console.WriteLine("too few arguments, use -h to show help ");
-            return;
+            ColoredConsole.WriteLine("r", "too few arguments, use -h to show help ");
+            return 1;
         }
 
         try
@@ -45,8 +46,11 @@ public static class DiffText
         { }
         catch (Exception ex)
         {
-            ColoredConsole.WriteLine("r", $"{ex.Message}\n{ex.StackTrace}");
+            ColoredConsole.WriteLine("r", ex.ToStringDemystified());
+            return 1;
         }
+
+        return 0;
     }
 
     public static List<Diff> FileDiff(string file0, string file1)
