@@ -58,10 +58,23 @@ static class Merge
 
     public static void ConsoleAskYN(string question, Action? yes, Action? no)
     {
-        Log("y", question + " [y/n]");
-        string answ = ColoredConsole.Read("w").ToLower();
-        if (answ == "y") yes?.Invoke();
-        else no?.Invoke();
+        while (true)
+        {
+            Log("y", question + " [y/n]");
+            string answ = Program.YesAll ? "y" : ColoredConsole.Read("w").ToLower();
+            if (answ == "y")
+            {
+                Log("c",$"answer: {answ}");
+                yes?.Invoke();
+                break;
+            }
+            if (answ == "n") {
+                Log("c",$"answer: {answ}");
+                no?.Invoke();
+                break;
+            }
+            Log("r", $"incorrect answer: {answ}");
+        }
     }
     
     static void HandleConflicts(IOPath[] moddirs)

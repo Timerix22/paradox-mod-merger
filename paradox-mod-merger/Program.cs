@@ -16,6 +16,8 @@ public static class Program
 {
     static ConsoleLogger logger = new($"logs", "main");
     static void Log(params string[] msg) => logger.Log(msg);
+
+    public static bool YesAll = false;
     
     static int Main(string[] args)
     {
@@ -28,9 +30,13 @@ public static class Program
             
             new LaunchArgumentParser(
             new LaunchArgument(new []{"o", "out"}, 
-            "sets output path", 
+            "Sets output path", 
             p => outPath=p,
             "out_path",
+            0),
+            new LaunchArgument(new []{"y", "yes-all"}, 
+            "Automatically answers [Y] to all questions", 
+            ()=> YesAll=true,
             0),
             new LaunchArgument(new []{"clear"}, 
             "Clear mod files and put them into separate dirs in output dir. Requires -o", 
