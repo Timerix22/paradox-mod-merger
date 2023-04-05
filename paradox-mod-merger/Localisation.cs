@@ -7,21 +7,29 @@ static class Localisation
     
     public static void GenerateRussian(IOPath engDir, IOPath rusDir)
     {
-        foreach (var enfFileName in Directory.GetAllFiles(engDir))
+        int counter = 0;
+        foreach (var fileName in Directory.GetAllFiles(engDir))
         {
-            IOPath rusFileName = enfFileName
+            if (!fileName.EndsWith("l_english.yml"))
+                continue;
+
+            IOPath rusFileName = fileName
                 .ReplaceBase(engDir, rusDir)
-                .ReplaceAnywhere("l_english", "l_russian");
+                .Replace("l_english", "l_russian");
+            
             if (!File.Exists(rusFileName))
             {
-                string text = File.ReadAllText(enfFileName)
-                    .Replace("l_english:", "l_russian: ");
-                byte[] bytes = StringConverter.UTF8BOM.GetBytes(text);
-                File.WriteAllBytes(rusFileName, bytes);
-                Log("g", $"file {rusFileName} created");
+                Log("gray", $"skipped file {rusFileName.RemoveBase(rusDir)}");
+                continue;
             }
-            else Log("y", $"file {rusFileName} already exists");
+            string text = File.ReadAllText(fileName)
+                .Replace("l_english:", "l_russian: ");
+            byte[] bytes = StringConverter.UTF8BOM.GetBytes(text);
+            File.WriteAllBytes(rusFileName, bytes);
+            Log("g", $"file {rusFileName} created");
+            counter++;
         }
+        Log("g",$"created {counter} localisation files");
     }
 
     // deletes all localisations except l_russian and l_english
