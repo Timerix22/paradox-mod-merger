@@ -15,11 +15,14 @@ static class Merge
         for (int i = 0; i < files.Count; i++)
         {
             string file_basename = files[i].LastName().Str;
-            if(file_basename=="descriptor.mod") // skip file
+            if (file_basename=="descriptor.mod") // skip file
                 continue;
+            
             if (file_basename == modlist_filename) // append modlist
             {
-                File.AppendAllText(out_modlist_file, File.ReadAllText(files[i]));
+                string subModlistText = File.ReadAllText(files[i]);
+                File.AppendAllText(out_modlist_file, subModlistText);
+                continue;
             }
                 
             var newfile = files[i].ReplaceBase(srcDir, outDir);
@@ -49,8 +52,8 @@ static class Merge
     {
         HandleConflicts(new[] { moddir, outDir });
         IOPath out_modlist_file = Path.Concat(outDir, modlist_filename);
-        ModDirCopy(moddir, outDir, modlist_filename);
         File.AppendAllText(out_modlist_file, $"{moddir.LastName()}\n");
+        ModDirCopy(moddir, outDir, out_modlist_file);
     }
 
     public static void ConsoleAskYN(string question, Action? yes, Action? no)
