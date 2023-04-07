@@ -92,7 +92,7 @@ static class Localisation
         {
             foreach (var file in Directory.GetFiles(loc_dir))
             {
-                if(file.EndsWith("l_russian.yml") || file.EndsWith("l_enghish.yml"))
+                if(file.EndsWith("l_russian.yml") || file.EndsWith("l_english.yml"))
                 {
                     // Log("w",$"skipped {file}");
                     continue;
