@@ -180,6 +180,17 @@ static class Merge
                 "m", not_found_mods.MergeToString('\n'));
         if (unchanged_mods.Count>0)
             Log("w", $"unchanged {unchanged_mods.Count}");
+
+        IOPath new_mods_copy_dir = Path.Concat(backup_dir.ParentDir(),
+            $"!new_{DateTime.Now.ToString(MyTimeFormat.ForFileNames)}");
+        ConsoleAskYN($"copy new mods to {new_mods_copy_dir}", () =>
+        {
+            foreach (var mod in added_mods)
+            {
+                Directory.Copy(mod, Path.Concat(new_mods_copy_dir, mod), false);
+            } 
+        }, 
+        null);
     }
 
     public static void RenameModsCommandHandler(string dir_with_mods, string rename_pairs_str)
