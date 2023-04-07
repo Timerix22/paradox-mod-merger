@@ -1,17 +1,12 @@
-using System.Linq;
 using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using DTLib.Ben.Demystifier;
+using Fizzler.Systems.HtmlAgilityPack;
 using HtmlAgilityPack;
 
 namespace ParadoxModMerger;
-using Fizzler.Systems.HtmlAgilityPack;
 
 static class Workshop
 {
-    
-    static ConsoleLogger logger = new($"logs", "clear");
+    static ConsoleLogger logger = new("logs", "clear");
     static void Log(params string[] msg) => logger.Log(msg);
     
     public static void ClearWorkshop(IOPath workshopDir, IOPath outDir)

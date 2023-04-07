@@ -1,20 +1,21 @@
 global using System;
 global using System.Collections.Generic;
 global using System.Diagnostics;
+global using System.Linq;
 global using System.Text;
+global using System.Threading.Tasks;
 global using DTLib;
 global using DTLib.Extensions;
 global using DTLib.Filesystem;
 global using DTLib.Logging;
-using System.Linq;
-using System.Security.Cryptography;
-using DTLib.Console;
+global using DTLib.Ben.Demystifier;
+global using DTLib.Console;
 
 namespace ParadoxModMerger;
 
 public static class Program
 {
-    static ConsoleLogger logger = new($"logs", "main");
+    static ConsoleLogger logger = new("logs", "main");
     static void Log(params string[] msg) => logger.Log(msg);
 
     public static bool YesAll = false;
@@ -95,7 +96,7 @@ public static class Program
         { }
         catch (Exception ex)
         {
-            Log("r", DTLib.Ben.Demystifier.ExceptionExtensions.ToStringDemystified(ex));
+            Log("r", ExceptionExtensions.ToStringDemystified(ex));
             Console.ResetColor();
             return 1;
         }

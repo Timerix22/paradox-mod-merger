@@ -1,8 +1,5 @@
-using System.Linq;
-using DTLib.Console;
-using DTLib.Dtsod;
 using diff_text;
-using DTLib.Ben.Demystifier;
+using DTLib.Dtsod;
 
 namespace ParadoxModMerger; 
 
@@ -17,7 +14,7 @@ public record struct ConflictingModFile(string FilePath, string[] Mods);
 
 static class Diff
 {
-    static ConsoleLogger logger = new($"logs", "diff");
+    static ConsoleLogger logger = new("logs", "diff");
     static void Log(params string[] msg) => logger.Log(msg);
 
     public static void DiffCommandHandler(string connected_pathes)

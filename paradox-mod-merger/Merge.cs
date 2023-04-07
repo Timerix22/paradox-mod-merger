@@ -1,11 +1,8 @@
-﻿using System.Linq;
-using DTLib.Console;
-
-namespace ParadoxModMerger;
+﻿namespace ParadoxModMerger;
 
 static class Merge
 {
-    static ConsoleLogger logger = new($"logs", "merge");
+    static ConsoleLogger logger = new("logs", "merge");
     static void Log(params string[] msg) => logger.Log(msg);
 
     private const string modlist_filename = "modlist.txt";
@@ -158,8 +155,8 @@ static class Merge
         }
 
         List<IOPath> added_mods = new List<IOPath>(src_dir_mods.Count - changed_mods.Count);
-        var found_mods = Enumerable
-            .Concat(changed_mods, unchanged_mods)
+        var found_mods = changed_mods
+            .Concat(unchanged_mods)
             .Select(m=>Path.Concat(updated_mods_dir, m.LastName()))
             .ToList();
         foreach (var modD in Diff.DiffCollections(found_mods, src_dir_mods))

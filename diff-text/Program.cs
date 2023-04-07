@@ -26,17 +26,20 @@ public static class DiffText
             List<Diff>? diff = null;
             bool noColors = false;
             new LaunchArgumentParser(
-                new LaunchArgument(new[] { "s", "string" },
-                    "shows difference of two strings",
-                    (s0, s1) => diff=TextDiff(s0, s1),
-                    "string0", "string1", 1),
-                new LaunchArgument(new[] { "f", "file" },
-                    "shows difference of two text files",
-                    (f0,f1) => diff=FileDiff(f0, f1),
-                    "file0", "file1", 1),
-                new LaunchArgument(new []{"p", "plain-text","no-colors"},
-                    "print diff in plain text format",
-                        ()=> noColors=true, 0)
+            new LaunchArgument(new[] { "s", "string" },
+            "shows difference of two strings",
+            (s0, s1) => diff=TextDiff(s0, s1),
+            "string0", "string1", 
+            1),
+            new LaunchArgument(new[] { "f", "file" },
+            "shows difference of two text files",
+            (f0,f1) => diff=FileDiff(f0, f1),
+            "file0", "file1", 
+            1),
+            new LaunchArgument(new []{"p", "plain-text","no-colors"},
+            "print diff in plain text format",
+            ()=> noColors=true, 
+            0)
             ).ParseAndHandle(args);
             if (diff == null)
                 throw new Exception("no action specified: use -s or -f");
