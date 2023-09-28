@@ -6,8 +6,8 @@ namespace ParadoxModMerger;
 
 static class Workshop
 {
-    static ConsoleLogger logger = new("logs", "clear");
-    static void Log(params string[] msg) => logger.Log(msg);
+    static ContextLogger logger = new(nameof(Workshop), new FileLogger("logs", "clear"));
+    static void Log(params string[] msg) => logger.LogColored(msg);
     
     public static void ClearWorkshop(IOPath workshopDir, IOPath outDir)
     {
@@ -17,7 +17,7 @@ static class Workshop
         
         for (int i = 0; i < moddirs.Length; i++)
         {
-            string modId = moddirs[i].LastName().ToString();
+            string modId = moddirs[i].LastName().Str;
             var zips = Directory.GetFiles(moddirs[i], "*.zip");
             if (zips.Length > 0)
             {

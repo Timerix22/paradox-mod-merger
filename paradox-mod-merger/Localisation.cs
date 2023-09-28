@@ -2,8 +2,8 @@
 
 static class Localisation
 {
-    static ConsoleLogger logger = new("logs", "autoloc");
-    static void Log(params string[] msg) => logger.Log(msg);
+    static ContextLogger logger = new(nameof(Localisation), new FileLogger("logs", "autoloc"));
+    static void Log(params string[] msg) => logger.LogColored(msg);
     
     public static void GenerateRussian(IOPath _engDir, IOPath _rusDir)
     {

@@ -2,8 +2,8 @@
 
 static class Merge
 {
-    static ConsoleLogger logger = new("logs", "merge");
-    static void Log(params string[] msg) => logger.Log(msg);
+    static ContextLogger logger = new(nameof(Merge), new FileLogger("logs", "merge"));
+    static void Log(params string[] msg) => logger.LogColored(msg);
 
     private const string modlist_filename = "modlist.txt";
 

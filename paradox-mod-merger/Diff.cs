@@ -14,8 +14,8 @@ public record struct ConflictingModFile(string FilePath, string[] Mods);
 
 static class Diff
 {
-    static ConsoleLogger logger = new("logs", "diff");
-    static void Log(params string[] msg) => logger.Log(msg);
+    static ContextLogger logger = new (nameof(Diff), new FileLogger("logs", "diff"));
+    static void Log(params string[] msg) => logger.LogColored(msg);
 
     public static void DiffCommandHandler(string connected_pathes)
     {
