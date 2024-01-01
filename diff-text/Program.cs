@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Text;
 using DiffMatchPatch;
-using DTLib.Ben.Demystifier;
 using DTLib.Console;
 using DTLib.Filesystem;
 
@@ -26,17 +25,17 @@ public static class DiffText
             List<Diff>? diff = null;
             bool noColors = false;
             new LaunchArgumentParser(
-            new LaunchArgument(new[] { "s", "string" },
+            new LaunchArgument(["s", "string"],
             "shows difference of two strings",
             (s0, s1) => diff=TextDiff(s0, s1),
             "string0", "string1", 
             1),
-            new LaunchArgument(new[] { "f", "file" },
+            new LaunchArgument(["f", "file"],
             "shows difference of two text files",
             (f0,f1) => diff=FileDiff(f0, f1),
             "file0", "file1", 
             1),
-            new LaunchArgument(new []{"p", "plain-text","no-colors"},
+            new LaunchArgument(["p", "plain-text","no-colors"],
             "print diff in plain text format",
             ()=> noColors=true, 
             0)
@@ -49,7 +48,7 @@ public static class DiffText
         { }
         catch (Exception ex)
         {
-            ColoredConsole.WriteLine("r", ex.ToStringDemystified());
+            ColoredConsole.WriteLine("r", $"{ex.Message} at {ex.Source}");
             return 1;
         }
 

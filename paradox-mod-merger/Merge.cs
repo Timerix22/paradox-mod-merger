@@ -50,7 +50,7 @@ static class Merge
 
     public static void MergeInto(IOPath moddir, IOPath outDir)
     {
-        HandleConflicts(new[] { moddir, outDir });
+        HandleConflicts([moddir, outDir]);
         IOPath out_modlist_file = Path.Concat(outDir, modlist_filename);
         File.AppendAllText(out_modlist_file, $"{moddir.LastName()}\n");
         ModDirCopy(moddir, outDir, out_modlist_file);
@@ -102,9 +102,9 @@ static class Merge
     public static void UpdateMods(IOPath updated_mods_dir, IOPath[] outdated_dirs, IOPath backup_dir)
     {
         var src_dir_mods = Directory.GetDirectories(updated_mods_dir).ToList();
-        List<IOPath> not_found_mods = new List<IOPath>();
-        List<IOPath> changed_mods = new List<IOPath>();
-        List<IOPath> unchanged_mods = new List<IOPath>();
+        List<IOPath> not_found_mods = [];
+        List<IOPath> changed_mods = [];
+        List<IOPath> unchanged_mods = [];
         
         foreach (IOPath outdated_mods_dir in outdated_dirs)
         foreach (var mod in Directory.GetDirectories(outdated_mods_dir))

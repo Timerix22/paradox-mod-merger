@@ -2,11 +2,12 @@
 <Project Sdk="Microsoft.Net.Sdk">
   <PropertyGroup>
     <OutputType>Exe</OutputType>
-    <TargetFramework>net7.0</TargetFramework>
+    <TargetFramework>net8.0</TargetFramework>
+    <LangVersion>12</LangVersion>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <Nullable>enable</Nullable>
     <RootNamespace>ParadoxModMerger</RootNamespace>
     <AssemblyName>paradox-mod-merger</AssemblyName>
-    <LangVersion>latest</LangVersion>
-    <Nullable>enable</Nullable>
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DTLib.Ben.Demystifier" Version="1.0.4" />

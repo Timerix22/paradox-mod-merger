@@ -177,7 +177,7 @@ static class Diff
                 var file = _file.RemoveBase(modp);
                 if (all_files.TryGetValue(file.Str, out var associated_mods))
                     associated_mods.Add(modp.Str);
-                else all_files.Add(file.Str, new List<string>(1) { modp.Str });
+                else all_files.Add(file.Str, [modp.Str]);
             }
         }
 
